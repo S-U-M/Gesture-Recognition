@@ -2,7 +2,7 @@
  * Hand Gesture Recognition Prototype
  * -----------------------------------
  * Approach:
- *   1. Convert BGR -> HSV, isolate skin tones via inRange()
+ *   1. Convert RGB -> HSV, isolate skin tones via inRange()
  *   2. Morphological cleanup (erode + dilate)
  *   3. Find largest contour (the hand)
  *   4. Compute convex hull + convexity defects to count fingers
@@ -13,7 +13,6 @@
  *
  * Build: Visual Studio 2022, OpenCV 4.x
  * Usage:
- *   gesture_recognition.exe                  <- webcam mode
  *   gesture_recognition.exe image.jpg        <- single image
  *   gesture_recognition.exe img1.jpg img2.jpg ... <- batch images
  */
