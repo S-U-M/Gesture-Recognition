@@ -125,7 +125,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GuestureRecognition.cpp" />
+    <ClCompile Include="GuestureClassifier.cpp" />
+    <ClCompile Include="HandAnalysis.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SkinSegmentation.cpp" />
+    <ClCompile Include="Visualization.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="GestureClassifier.h" />
+    <ClInclude Include="HandAnalysis.h" />
+    <ClInclude Include="SkinSegmentation.h" />
+    <ClInclude Include="Visualization.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
