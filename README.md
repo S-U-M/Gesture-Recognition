@@ -65,7 +65,7 @@ The recognizer runs six stages on every frame:
 
 ### Workflow diagram
 
-<img width="1440" height="1720" alt="Full pipeline diagram" src="https://github.com/user-attachments/assets/99a24ace-afbf-41e2-afd8-176f3a3e19bf" />
+<img width="1440" height="1720" alt="image" src="https://github.com/user-attachments/assets/99a24ace-afbf-41e2-afd8-176f3a3e19bf" />
 
 ## Classifier logic
 
@@ -76,7 +76,7 @@ The recognizer runs six stages on every frame:
 
 ### Classifier decision tree
 
-<img width="1440" height="1400" alt="Classifier decision tree" src="https://github.com/user-attachments/assets/73822405-fbfd-4b58-8b67-c6952d04f79e" />
+<img width="1440" height="1400" alt="image" src="https://github.com/user-attachments/assets/73822405-fbfd-4b58-8b67-c6952d04f79e" />
 
 ## Tuning
 
@@ -95,11 +95,3 @@ All thresholds live in `constants.hpp`. The most impactful ones:
 - Skin segmentation is HSV-range based, so it is sensitive to lighting colour temperature. Fluorescent and mixed lighting may require adjusting `SKIN_LOW`/`SKIN_HIGH`.
 - The classifier has no concept of hand orientation — a sideways thumbs-up will likely misclassify.
 - Okay sign detection is approximate; a proper implementation would benefit from fingertip landmark detection.
-
-Workflow of the project:
-
-<img width="1440" height="1720" alt="image" src="https://github.com/user-attachments/assets/99a24ace-afbf-41e2-afd8-176f3a3e19bf" />
-
-The classifier in this project is a pure decision tree. It checks fingerCount first, then uses aspectRatio and solidity as tie-breakers. Here's the exact branching logic:
-
-<img width="1440" height="1400" alt="image" src="https://github.com/user-attachments/assets/73822405-fbfd-4b58-8b67-c6952d04f79e" />
