@@ -25,3 +25,10 @@ const double MIN_DEFECT_DEPTH = 60.0;
 // Defects whose far-point sits below this fraction of the bounding box
 // are assumed to be wrist valleys and are discarded
 const double WRIST_CUTOFF_FRACTION = 0.60;
+
+// New constant — wider angle tolerance only for the inter-finger gap
+// used when validating a potential 2-finger gesture
+const double MAX_FINGER_ANGLE_DEG = 145.0;
+
+// Lower depth threshold specifically for wide-angle inter-finger gaps (peace sign)
+const double MIN_PEACE_DEFECT_DEPTH = 10.0;

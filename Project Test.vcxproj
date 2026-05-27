@@ -125,7 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GuestureClassifier.cpp" />
+    <ClCompile Include="GestureClassifier.cpp" />
     <ClCompile Include="HandAnalysis.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SkinSegmentation.cpp" />
