@@ -73,30 +73,42 @@ HandFeatures analyzeHand(const cv::Mat& mask)
         + static_cast<int>(f.boundingBox.height * WRIST_CUTOFF_FRACTION);
 
     int validDefects = 0;
+    int wideDefects = 0;    // ← new
+
     for (const auto& d : defects)
     {
         cv::Point start = f.contour[d[0]];
         cv::Point end = f.contour[d[1]];
         cv::Point far = f.contour[d[2]];
-        double    depth = d[3] / 256.0;   // stored as fixed-point * 256
+        double    depth = d[3] / 256.0;
 
-        // --- FIX: raised MIN_DEFECT_DEPTH (40 px, was 20) -------------------
-        if (depth < MIN_DEFECT_DEPTH) continue;
-
-        // --- FIX: discard wrist-area valleys ---------------------------------
+        // AFTER
         if (far.y > wristCutoffY) continue;
 
         double angle = angleBetween(start, far, end);
-        if (angle < MAX_DEFECT_ANGLE_DEG)
+
+        if (depth >= MIN_DEFECT_DEPTH && angle < MAX_DEFECT_ANGLE_DEG)
             ++validDefects;
+        else if (depth >= MIN_PEACE_DEFECT_DEPTH && angle < MAX_FINGER_ANGLE_DEG)
+            ++wideDefects;
+
+        printf("depth=%.1f  angle=%.1f  far.y=%d  cutoffY=%d\n",
+            depth, angleBetween(start, far, end), far.y, wristCutoffY);
+
     }
 
-    // --- FIX: only add 1 when at least one gap was found --------------------
-    // Previously "+1" was applied unconditionally, turning a fist (0 gaps)
-    // into fingerCount = 1, so fists were never detected.
-    // Now: 0 gaps → 0 fingers (fist), N gaps → N+1 fingers.
-    if (validDefects > 0)
+    /*if (validDefects == 1)
+        f.fingerCount = 1;
+    else if (validDefects > 1)
+        f.fingerCount = std::min(5, validDefects + 1);*/
+
+    // ← if no strict defects but wide ones found, likely a peace sign
+    if (validDefects == 1)
+        f.fingerCount = std::min(5, 1 + wideDefects + 1);
+    else if (validDefects > 1)
         f.fingerCount = std::min(5, validDefects + 1);
+    else if (validDefects == 0 && wideDefects >= 1)
+        f.fingerCount = 2;
     // else f.fingerCount stays 0  →  correctly classified as Fist
 
     return f;
