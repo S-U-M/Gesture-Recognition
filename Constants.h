@@ -1,27 +1,27 @@
-﻿#pragma once
+#pragma once
 #include <opencv2/opencv.hpp>
 
-// ─── HSV skin ranges ──────────────────────────────────────────────────────────
-// Primary range covers light-to-medium skin under indoor lighting
-const cv::Scalar SKIN_LOW(0, 20, 70);
-const cv::Scalar SKIN_HIGH(20, 255, 255);
-
-// Secondary range captures darker/redder hues near the red wraparound
-const cv::Scalar SKIN_LOW2(170, 20, 70);
+// HSV skin ranges. OpenCV hue range is 0..180.
+// The lower saturation bound is intentionally moderate so bright indoor lighting
+// does not erase the hand.
+const cv::Scalar SKIN_LOW(0, 25, 50);
+const cv::Scalar SKIN_HIGH(25, 255, 255);
+const cv::Scalar SKIN_LOW2(160, 25, 50);
 const cv::Scalar SKIN_HIGH2(180, 255, 255);
 
-// ─── Contour / hand filtering ─────────────────────────────────────────────────
-// Blobs below this area (px²) are ignored as background noise
-const double MIN_HAND_AREA = 8000.0;
+// YCrCb skin range used together with HSV to make segmentation less lighting-sensitive.
+const cv::Scalar SKIN_YCRCB_LOW(0, 133, 77);
+const cv::Scalar SKIN_YCRCB_HIGH(255, 173, 127);
 
-// ─── Convexity-defect thresholds ──────────────────────────────────────────────
-// Valleys with an opening angle above this are NOT finger gaps
-// (raised to 90° — tight enough to reject wrist concavities)
-const double MAX_DEFECT_ANGLE_DEG = 90.0;
+// Contour filtering.
+// Use both an absolute floor and an image-relative floor so resizing does not break detection.
+const double MIN_HAND_AREA = 1200.0;
+const double MIN_HAND_AREA_RATIO = 0.003;
 
-// Raised from 20 → 40 px to suppress shallow hull artifacts and wrist edges
-const double MIN_DEFECT_DEPTH = 40.0;
+// Convexity-defect thresholds.
+const double MAX_DEFECT_ANGLE_DEG = 115.0;
+const double MIN_DEFECT_DEPTH = 10.0;
+const double MIN_DEFECT_DEPTH_RATIO = 0.025;
 
-// Defects whose far-point sits below this fraction of the bounding box
-// are assumed to be wrist valleys and are discarded
-const double WRIST_CUTOFF_FRACTION = 0.75;
+// Defects below this fraction of the bounding box are treated as wrist/forearm valleys.
+const double WRIST_CUTOFF_FRACTION = 0.78;

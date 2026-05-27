@@ -1,4 +1,4 @@
-﻿#include "Visualization.h"
+#include "Visualization.h"
 #include <string>
 
 void drawResults(cv::Mat& display, const HandFeatures& f, const std::string& gesture)

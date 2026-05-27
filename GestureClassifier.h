@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "HandAnalysis.h"
 #include <string>
 
