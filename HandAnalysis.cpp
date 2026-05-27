@@ -87,6 +87,12 @@ HandFeatures analyzeHand(const cv::Mat& mask)
         if (far.y > wristCutoffY) continue;
 
         double angle = angleBetween(start, far, end);
+
+        // added debug statement to see which continue is killing the defect
+        printf("depth=%.1f  angle=%.1f  far.y=%d  cutoffY=%d\n",
+            depth, angle, far.y, wristCutoffY);
+
+
         if (angle < MAX_DEFECT_ANGLE_DEG)
             ++validDefects;
     }
@@ -95,7 +101,9 @@ HandFeatures analyzeHand(const cv::Mat& mask)
     // Previously "+1" was applied unconditionally, turning a fist (0 gaps)
     // into fingerCount = 1, so fists were never detected.
     // Now: 0 gaps → 0 fingers (fist), N gaps → N+1 fingers.
-    if (validDefects > 0)
+    if (validDefects == 1)
+        f.fingerCount = 1;   // one gap = one isolated finger/thumb
+    else if (validDefects > 1)
         f.fingerCount = std::min(5, validDefects + 1);
     // else f.fingerCount stays 0  →  correctly classified as Fist
 
