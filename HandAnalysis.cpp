@@ -103,17 +103,12 @@ HandFeatures analyzeHand(const cv::Mat& mask)
         f.fingerCount = std::min(5, validDefects + 1);*/
 
     // ← if no strict defects but wide ones found, likely a peace sign
-    if (validDefects == 0 && wideDefects >= 1)
-        f.fingerCount = 2;
-
-    // --- FIX: only add 1 when at least one gap was found --------------------
-    // Previously "+1" was applied unconditionally, turning a fist (0 gaps)
-    // into fingerCount = 1, so fists were never detected.
-    // Now: 0 gaps → 0 fingers (fist), N gaps → N+1 fingers.
     if (validDefects == 1)
-        f.fingerCount = 1;   // one gap = one isolated finger/thumb
+        f.fingerCount = std::min(5, 1 + wideDefects + 1);
     else if (validDefects > 1)
         f.fingerCount = std::min(5, validDefects + 1);
+    else if (validDefects == 0 && wideDefects >= 1)
+        f.fingerCount = 2;
     // else f.fingerCount stays 0  →  correctly classified as Fist
 
     return f;

@@ -44,7 +44,7 @@ std::string classifyGesture(const HandFeatures& f)
         // Wide spread hand → Stop / flat palm facing camera
         if (ar > 0.90)
             return "Stop Gesture";
-        return "Open Palm";
+        return "Stop Gesture";
     }
 
     return "Unknown";
