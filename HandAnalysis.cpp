@@ -103,8 +103,10 @@ HandFeatures analyzeHand(const cv::Mat& mask)
         f.fingerCount = std::min(5, validDefects + 1);*/
 
     // ← if no strict defects but wide ones found, likely a peace sign
-    if (validDefects == 1)
+    if (validDefects == 1 && wideDefects >= 3)
         f.fingerCount = std::min(5, 1 + wideDefects + 1);
+    else if (validDefects == 1)
+        f.fingerCount = 1;
     else if (validDefects > 1)
         f.fingerCount = std::min(5, validDefects + 1);
     else if (validDefects == 0 && wideDefects >= 1)
