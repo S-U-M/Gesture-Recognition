@@ -11,7 +11,7 @@ std::string classifyGesture(const HandFeatures& f)
 
     // ── 0 fingers → closed fist ───────────────────────────────────────────────
     if (fc <= 0)
-        return "Fist";
+        return "Unknown";
 
     // ── 1 finger or thumb ─────────────────────────────────────────────────────
     // Thumbs Up: narrow + tall (ar < 0.85) AND solid hull (sol > 0.75).

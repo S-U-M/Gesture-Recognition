@@ -21,20 +21,33 @@ void drawResults(cv::Mat& display, const HandFeatures& f, const std::string& ges
     cv::rectangle(display, f.boundingBox, { 100, 100, 255 }, 2);
 
     // ── Large gesture label (shadow pass + colour pass) ───────────────────────
-    const cv::Point labelPos{ 40, 120 };
+   // ── Large gesture label (shadow pass + colour pass) ───────────────────────
+    // Scale font so the label always fits within the display width
+    double fontScale = 4.0;
+    int thickness = 5;
+    int baseline = 0;
+    cv::Size textSize = cv::getTextSize(gesture, cv::FONT_HERSHEY_SIMPLEX, fontScale, thickness, &baseline);
 
+    // Shrink until it fits within 90% of the display width
+    while (textSize.width > display.cols * 0.90 && fontScale > 0.5)
+    {
+        fontScale -= 0.1;
+        textSize = cv::getTextSize(gesture, cv::FONT_HERSHEY_SIMPLEX, fontScale, thickness, &baseline);
+    }
+
+    const cv::Point labelPos{ 40, 120 };
     cv::putText(display, gesture, labelPos,
-        cv::FONT_HERSHEY_SIMPLEX, 4.0, { 0, 0, 0 }, 10);   // shadow
+        cv::FONT_HERSHEY_SIMPLEX, fontScale, { 0, 0, 0 }, thickness * 2); // shadow
     cv::putText(display, gesture, labelPos,
-        cv::FONT_HERSHEY_SIMPLEX, 4.0, { 50, 200, 50 }, 5); // foreground
+        cv::FONT_HERSHEY_SIMPLEX, fontScale, { 50, 200, 50 }, thickness);  // foreground
 
     // ── Small debug line ──────────────────────────────────────────────────────
-    std::string info = "Fingers: " + std::to_string(f.fingerCount)
-        + "  Solidity: " + std::to_string(static_cast<int>(f.solidity * 100)) + "%"
-        + "  AR: " + std::to_string(f.aspectRatio).substr(0, 4);
+    //std::string info = "Fingers: " + std::to_string(f.fingerCount)
+    //    + "  Solidity: " + std::to_string(static_cast<int>(f.solidity * 100)) + "%"
+    //    + "  AR: " + std::to_string(f.aspectRatio).substr(0, 4);
 
-    cv::putText(display, info, { 20, 90 },
-        cv::FONT_HERSHEY_SIMPLEX, 0.6, { 0, 0, 0 }, 3);      // shadow
-    cv::putText(display, info, { 20, 90 },
-        cv::FONT_HERSHEY_SIMPLEX, 0.6, { 200, 200, 200 }, 1); // foreground
+    //cv::putText(display, info, { 20, 90 },
+    //    cv::FONT_HERSHEY_SIMPLEX, 0.6, { 0, 0, 0 }, 3);      // shadow
+    //cv::putText(display, info, { 20, 90 },
+    //    cv::FONT_HERSHEY_SIMPLEX, 0.6, { 200, 200, 200 }, 1); // foreground
 }
