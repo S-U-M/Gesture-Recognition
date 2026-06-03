@@ -27,10 +27,6 @@ gesture_recognition/
 
 ## Build
 
-```bash
-cmake -B build -S .
-cmake --build build
-```
 
 Requires OpenCV 4.x. Tested on Visual Studio 2022 (Windows) and GCC 12 (Linux).
 
