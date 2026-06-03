@@ -1,10 +1,11 @@
 @echo off
 setlocal
 
-set BASEDIR=%~dp0
+REM Get the directory where this .bat file lives
+set "BASEDIR=%~dp0"
 
-set EXE=%BASEDIR%x64\Debug\Project Test.exe
-set IMGDIR=%BASEDIR%
+set "EXE=%BASEDIR%x64\Debug\Project Test.exe"
+set "IMGDIR=%BASEDIR%"
 
 echo Running OK tests...
 "%EXE%" "%IMGDIR%ok1.jpg"

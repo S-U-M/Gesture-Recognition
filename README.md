@@ -6,7 +6,6 @@ A rule-based hand gesture recognizer built with OpenCV 4.x and C++17. It segment
 
 | Gesture | Fingers detected |
 |---|---|
-| Fist | 0 |
 | Thumbs up | 1 (narrow + solid blob) |
 | Pointing | 1 (other) |
 | Peace sign | 2 |
