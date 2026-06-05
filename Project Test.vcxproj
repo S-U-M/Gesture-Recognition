@@ -138,6 +138,24 @@
     <ClInclude Include="SkinSegmentation.h" />
     <ClInclude Include="Visualization.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="ok1.jpg" />
+    <Image Include="ok2.jpg" />
+    <Image Include="peace1.jpg" />
+    <Image Include="peace2.jpg" />
+    <Image Include="pointing1.jpg" />
+    <Image Include="pointing2.jpg" />
+    <Image Include="stop1.jpg" />
+    <Image Include="stop2.jpg" />
+    <Image Include="thumbsup1.jpg" />
+    <Image Include="thumbsup2.jpg" />
+    <Image Include="thumbs_up.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OpenCV_Debug.props" />
+    <None Include="README.md" />
+    <None Include="run_all_tests.bat" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
