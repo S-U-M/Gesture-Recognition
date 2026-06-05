@@ -134,7 +134,7 @@ int main(int argc, char* argv[])
             paths.emplace_back(argv[i]);
     }
     else {
-        paths.emplace_back("thumbs_up.jpg");
+        paths.emplace_back("thumbsup1.jpg");
     }
 
     // Set to true for final testing because the mask helps explain the pipeline

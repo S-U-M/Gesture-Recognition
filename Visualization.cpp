@@ -34,54 +34,8 @@ void drawResults(cv::Mat& display, const HandFeatures& f, const std::string& ges
 
     // Draw the bounding rectangle used to compute aspect ratio and area ratio.
     cv::rectangle(display, f.boundingBox, { 100, 100, 255 }, 2);
-
-    // Start with a large label and shrink it until it fits the output window.
-    // This prevents long labels from running off the edge of smaller images.
-    double fontScale = 4.0;
-    int thickness = 5;
-    int baseline = 0;
-    cv::Size textSize = cv::getTextSize(
-        gesture,
-        cv::FONT_HERSHEY_SIMPLEX,
-        fontScale,
-        thickness,
-        &baseline
-    );
-
-    while (textSize.width > display.cols * 0.90 && fontScale > 0.5)
-    {
-        fontScale -= 0.1;
-        textSize = cv::getTextSize(
-            gesture,
-            cv::FONT_HERSHEY_SIMPLEX,
-            fontScale,
-            thickness,
-            &baseline
-        );
-    }
-
-    // Draw a thick black shadow first, then draw the colored label on top. This
-    // makes the gesture name readable on both light and dark backgrounds.
-    const cv::Point labelPos{ 40, 120 };
-    cv::putText(display, gesture, labelPos,
-        cv::FONT_HERSHEY_SIMPLEX, fontScale, { 0, 0, 0 }, thickness * 2);
-    cv::putText(display, gesture, labelPos,
-        cv::FONT_HERSHEY_SIMPLEX, fontScale, { 50, 200, 50 }, thickness);
-
-    // Optional debug overlay for feature values. This is intentionally left
-    // disabled for cleaner result screenshots, but it can be re-enabled when
-    // tuning thresholds or explaining the classifier in the write-up.
-    // std::string info = "Fingers: " + std::to_string(f.fingerCount)
-    //     + "  Solidity: " + std::to_string(static_cast<int>(f.solidity * 100)) + "%"
-    //     + "  AR: " + std::to_string(f.aspectRatio).substr(0, 4);
-
-    // cv::putText(display, info, { 20, 90 },
-    //     cv::FONT_HERSHEY_SIMPLEX, 0.6, { 0, 0, 0 }, 3);
-    // cv::putText(display, info, { 20, 90 },
-    //     cv::FONT_HERSHEY_SIMPLEX, 0.6, { 200, 200, 200 }, 1);
-}
-    // ── Large gesture label (shadow pass + colour pass) ───────────────────────
-   // ── Large gesture label (shadow pass + colour pass) ───────────────────────
+    
+    // Large gesture label (shadow pass + colour pass) ───────────────────────
     // Scale font so the label always fits within the display width
     double fontScale = 4.0;
     int thickness = 5;
@@ -100,14 +54,4 @@ void drawResults(cv::Mat& display, const HandFeatures& f, const std::string& ges
         cv::FONT_HERSHEY_SIMPLEX, fontScale, { 0, 0, 0 }, thickness * 2); // shadow
     cv::putText(display, gesture, labelPos,
         cv::FONT_HERSHEY_SIMPLEX, fontScale, { 50, 200, 50 }, thickness);  // foreground
-
-    // ── Small debug line ──────────────────────────────────────────────────────
-    //std::string info = "Fingers: " + std::to_string(f.fingerCount)
-    //    + "  Solidity: " + std::to_string(static_cast<int>(f.solidity * 100)) + "%"
-    //    + "  AR: " + std::to_string(f.aspectRatio).substr(0, 4);
-
-    //cv::putText(display, info, { 20, 90 },
-    //    cv::FONT_HERSHEY_SIMPLEX, 0.6, { 0, 0, 0 }, 3);      // shadow
-    //cv::putText(display, info, { 20, 90 },
-    //    cv::FONT_HERSHEY_SIMPLEX, 0.6, { 200, 200, 200 }, 1); // foreground
 }
